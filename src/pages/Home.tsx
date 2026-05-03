@@ -15,12 +15,19 @@ import {
 } from 'lucide-react';
 import { SectionLabel } from '../components/SectionLabel';
 import { ConceptualAnimation } from '../components/ConceptualAnimation';
+import { SEO } from '../components/SEO';
 
 import { Link } from 'react-router-dom';
+import { useModal } from '../context/ModalContext';
 
 export const Home = () => {
+  const { openModal } = useModal();
   return (
     <>
+      <SEO 
+        title="Orvelo | Helping Businesses Build Secure and Scalable Ecosystems" 
+        description="Orvelo is an extended leadership team that helps companies audit workflows, standardise operations, and build AI-assisted digital ecosystems for scale."
+      />
       {/* SECTION 1: OPENING SECTION */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-24 py-32 z-10 max-w-7xl mx-auto overflow-hidden">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -56,7 +63,10 @@ export const Home = () => {
               transition={{ delay: 0.8, duration: 1 }}
               viewport={{ once: true }}
             >
-              <button className="group flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all">
+              <button 
+                onClick={openModal}
+                className="group flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
+              >
                 Start a Conversation
                 <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -191,7 +201,7 @@ export const Home = () => {
               name: "Beta Mahatvaraj",
               credentials: "AI Strategy & Implementation",
               bio: "For businesses that need help making sense of AI, identifying the right use cases, and choosing what to prioritize.",
-              imagePath: "/Beta.png",
+              imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Beta.png",
               seed: "beta-mahatvaraj"
             },
             {
@@ -199,7 +209,7 @@ export const Home = () => {
               name: "Muthuraman",
               credentials: "Systems Architecture",
               bio: "For businesses that need help improving systems, building tools, automating workflows, or translating ideas into execution.",
-              imagePath: "/Muthu.png",
+              imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Muthu.png",
               seed: "muthuraman"
             },
             {
@@ -207,7 +217,7 @@ export const Home = () => {
               name: "Senthil Anand",
               credentials: "Growth & Digital Strategy",
               bio: "For businesses that need help fixing sales and marketing gaps, improving demand generation, and building stronger growth systems.",
-              imagePath: "/Senthil.png",
+              imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Senthil.png",
               seed: "senthil-anand"
             }
           ].map((leader, i) => (
@@ -421,11 +431,17 @@ export const Home = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button className="px-10 py-5 bg-brand-blue text-white font-bold rounded-full hover:brightness-110 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+            <button 
+              onClick={openModal}
+              className="px-10 py-5 bg-brand-blue text-white font-bold rounded-full hover:brightness-110 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-[0_0_30px_rgba(59,130,246,0.2)]"
+            >
               <Calendar className="w-5 h-5" />
               Book a Strategy Call
             </button>
-            <button className="px-10 py-5 bg-white/5 border border-white/10 font-bold rounded-full hover:bg-white/10 transition-all flex items-center gap-3 text-white">
+            <button 
+              onClick={openModal}
+              className="px-10 py-5 bg-white/5 border border-white/10 font-bold rounded-full hover:bg-white/10 transition-all flex items-center gap-3 text-white"
+            >
               <MessageSquare className="w-5 h-5" />
               Start a Conversation
             </button>

@@ -3,10 +3,13 @@ import { motion, useScroll, useSpring } from 'motion/react';
 import { CASE_STUDIES } from '../CaseStudyData';
 import { ArrowLeft, CheckCircle2, ChevronRight } from 'lucide-react';
 import { useEffect } from 'react';
+import { useModal } from '../context/ModalContext';
+import { SEO } from '../components/SEO';
 
 export const CaseStudyDetail = () => {
   const { slug } = useParams();
   const study = CASE_STUDIES.find(s => s.slug === slug);
+  const { openModal } = useModal();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -21,6 +24,7 @@ export const CaseStudyDetail = () => {
   if (!study) {
     return (
       <div className="min-h-screen flex items-center justify-center text-white/50">
+        <SEO title="Case Study Not Found | Orvelo" />
         <div className="text-center">
           <h2 className="text-4xl font-light mb-4 text-white">Case study not found</h2>
           <Link to="/case-studies" className="text-brand-teal hover:underline flex items-center gap-2 justify-center">
@@ -33,6 +37,10 @@ export const CaseStudyDetail = () => {
 
   return (
     <div className="relative">
+      <SEO 
+        title={`${study.title} | Orvelo`} 
+        description={study.clientContext}
+      />
       {/* Scroll Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-brand-teal origin-left z-[60]"
@@ -147,7 +155,10 @@ export const CaseStudyDetail = () => {
               See other solutions <ChevronRight className="w-4 h-4" />
             </Link>
             
-            <button className="px-10 py-5 bg-brand-blue text-white font-bold rounded-full hover:brightness-110 transition-all shadow-[0_0_50px_rgba(59,130,246,0.15)] flex items-center gap-3">
+            <button 
+              onClick={openModal}
+              className="px-10 py-5 bg-brand-blue text-white font-bold rounded-full hover:brightness-110 transition-all shadow-[0_0_50px_rgba(59,130,246,0.15)] flex items-center gap-3"
+            >
               Discuss your challenge
             </button>
           </div>

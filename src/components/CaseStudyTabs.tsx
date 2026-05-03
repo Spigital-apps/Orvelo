@@ -20,7 +20,7 @@ export const CaseStudyTabs = () => {
             onClick={() => setActiveCategory(category)}
             className={`px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 relative ${
               activeCategory === category 
-                ? 'text-brand-teal bg-white/5' 
+                ? 'text-brand-teal bg-brand-teal/5' 
                 : 'text-white/40 hover:text-white/70 hover:bg-white/[0.02]'
             }`}
           >
