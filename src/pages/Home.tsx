@@ -20,15 +20,30 @@ import { SEO } from '../components/SEO';
 import { Link } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
 
+import { CaseStudyTabs } from '../components/CaseStudyTabs';
+import { CASE_STUDIES } from '../CaseStudyData';
+import { useState, useRef } from 'react';
+
 export const Home = () => {
   const { openModal } = useModal();
+  const [activeCategory, setActiveCategory] = useState('All');
+  
+  const filteredStudies = activeCategory === 'All' 
+    ? CASE_STUDIES 
+    : CASE_STUDIES.filter(study => study.category === activeCategory);
+
+  const featuredStudies = filteredStudies.slice(0, 3);
+  const carouselStudies = filteredStudies.slice(3);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   return (
     <>
       <SEO 
         title="Orvelo | Helping Businesses Build Secure and Scalable Ecosystems" 
         description="Orvelo is an extended leadership team that helps companies audit workflows, standardise operations, and build AI-assisted digital ecosystems for scale."
       />
-      {/* SECTION 1: OPENING SECTION */}
+      
+      {/* SECTION 1: OPENING SECTION (Hero) */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-24 py-32 z-10 max-w-7xl mx-auto overflow-hidden">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <motion.div
@@ -43,7 +58,7 @@ export const Home = () => {
                   There is an <span className="italic">AI</span> for everything.
                 </span>
                 <span className="text-base md:text-xl font-light text-white/40 text-balance leading-relaxed">
-                  But what is actually right for <span className="text-white/60">your business?</span>
+                  But how do you make it <span className="text-[#2ecab7]">work for your business?</span>
                 </span>
               </h1>
             </div>
@@ -88,7 +103,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* SECTION 2: WHO WE ARE */}
+      {/* SECTION 2: WHO WE ARE (Genesis) */}
       <section id="who" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
         <div className="grid md:grid-cols-2 gap-24 items-start">
           <motion.div
@@ -149,8 +164,8 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* SECTION 3: START SMALL */}
-      <section className="relative py-56 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto">
+      {/* SECTION 3: START SMALL (Strategy) */}
+      <section className="relative py-48 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto border-t border-white/5">
         <motion.div
            initial={{ opacity: 0, scale: 0.98 }}
            whileInView={{ opacity: 1, scale: 1 }}
@@ -169,7 +184,7 @@ export const Home = () => {
               That is how we work. We help businesses focus on what matters first, validate value early, and grow with more confidence over time.
             </p>
             <div className="pt-12">
-               <span className="text-white font-bold uppercase tracking-[0.4em] text-[10px] border-b border-brand-teal/40 pb-2">
+               <span className="text-white font-bold uppercase tracking-[0.4em] text-[10px] border-[#2ecab7]/40 border-b pb-2">
                  Start with the right move. Build from what works.
                </span>
             </div>
@@ -177,8 +192,99 @@ export const Home = () => {
         </motion.div>
       </section>
 
-      {/* SECTION 4: DIRECTION SECTION (Leadership) */}
-      <section id="leadership" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto">
+      {/* SECTION 4: EVIDENCE (Case Studies) */}
+      <section id="case-studies" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
+        <div className="mb-20">
+          <SectionLabel>Evidence</SectionLabel>
+          <h2 className="text-2xl md:text-4xl font-light mb-4 text-white">What this looks like in practice</h2>
+          <p className="text-white/60 text-base font-light mb-12">
+            How Orvelo brings leadership and execution together for real-world impact.
+          </p>
+
+          <CaseStudyTabs activeCategory={activeCategory} setActiveCategory={setActiveCategory} showContent={false} />
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {featuredStudies.map((study, i) => (
+            <motion.div
+              key={study.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Link 
+                to={`/case-studies/${study.slug}`}
+                className="glass p-8 rounded-[2.5rem] group hover:border-brand-teal/40 transition-all duration-500 h-full flex flex-col"
+              >
+                <div className="text-[10px] uppercase tracking-widest text-brand-teal font-bold mb-4">{study.category}</div>
+                <h3 className="text-xl font-light mb-6 group-hover:text-brand-teal transition-colors flex-grow leading-tight">{study.title}</h3>
+                <p className="text-white/50 text-xs leading-relaxed mb-8 line-clamp-3 font-light">{study.outcome}</p>
+                <div className="flex items-center justify-between mt-auto">
+                  <span className="text-white/30 text-[9px] uppercase tracking-widest font-bold group-hover:text-brand-teal transition-colors">Read Case Study</span>
+                  <ArrowRight className="w-4 h-4 text-brand-teal group-hover:translate-x-2 transition-transform" />
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        {carouselStudies.length > 0 && (
+          <div className="relative mb-24">
+            <div className="flex items-center justify-between mb-8">
+              <h4 className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-bold">More {activeCategory === 'All' ? '' : activeCategory} Impact</h4>
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => scrollRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}
+                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+                >
+                  <ArrowRight className="w-5 h-5 rotate-180" />
+                </button>
+                <button 
+                  onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}
+                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+            <div 
+              ref={scrollRef}
+              className="flex gap-6 overflow-x-auto pb-8 snap-x no-scrollbar"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {carouselStudies.map((study) => (
+                <Link 
+                  key={study.id}
+                  to={`/case-studies/${study.slug}`}
+                  className="min-w-[320px] md:min-w-[420px] snap-start glass p-10 rounded-[2.5rem] group hover:border-brand-teal/40 transition-all duration-500"
+                >
+                  <div className="text-[9px] uppercase tracking-widest text-brand-teal font-bold mb-4">{study.category}</div>
+                  <h3 className="text-lg md:text-xl font-light mb-6 group-hover:text-brand-teal transition-colors line-clamp-2 leading-tight">{study.title}</h3>
+                  <div className="flex items-center gap-2 text-white/30 text-[9px] uppercase tracking-widest font-bold group-hover:text-white/60 transition-colors">
+                    Learn More <ArrowRight className="w-3 h-3" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-12 text-center">
+          <Link 
+            to="/case-studies"
+            className="group inline-flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
+          >
+            Explore all {CASE_STUDIES.length} case studies
+            <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* SECTION 5: ADVISORY (Leadership) */}
+      <section id="leadership" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -194,29 +300,37 @@ export const Home = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {[
             {
-              role: "Fractional CAIO",
+              role: "Your extended CAIO",
               name: "Beta Mahatvaraj",
               credentials: "AI Strategy & Implementation",
-              bio: "For businesses that need help making sense of AI, identifying the right use cases, and choosing what to prioritize.",
+              bio: "Helping businesses and founders understand AI, identify the right use cases, and prioritize what to build for maximum impact.",
               imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Beta.png",
               seed: "beta-mahatvaraj"
             },
             {
-              role: "CTO",
+              role: "Your extended CAIO",
+              name: "Karthikeyan",
+              credentials: "AI Strategist & Coach",
+              bio: "Helping businesses and founders adopt AI effectively and build the right AI foundations for their organization.",
+              imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Karthikeyan.png",
+              seed: "karthikeyan"
+            },
+            {
+              role: "Your extended CTO",
               name: "Muthuraman",
               credentials: "Systems Architecture",
-              bio: "For businesses that need help improving systems, building tools, automating workflows, or translating ideas into execution.",
+              bio: "Helping businesses improve systems, build tools, automate workflows, and translate complex ideas into reliable execution.",
               imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Muthu.png",
               seed: "muthuraman"
             },
             {
-              role: "Fractional CMO",
+              role: "Your extended CMO",
               name: "Senthil Anand",
               credentials: "Growth & Digital Strategy",
-              bio: "For businesses that need help fixing sales and marketing gaps, improving demand generation, and building stronger growth systems.",
+              bio: "Helping businesses fix sales and marketing gaps, improve demand generation, and build stronger growth systems for scale.",
               imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Senthil.png",
               seed: "senthil-anand"
             }
@@ -260,8 +374,8 @@ export const Home = () => {
       </section>
 
 
-      {/* SECTION 5: MOMENTUM SECTION (Execution) */}
-      <section id="momentum" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto">
+      {/* SECTION 6: MOMENTUM (Execution) */}
+      <section id="momentum" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
         <div className="grid lg:grid-cols-2 gap-24 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -272,7 +386,7 @@ export const Home = () => {
             <h2 className="text-xl md:text-3xl font-light mb-8">
               Then we help you build momentum through execution
             </h2>
-            <div className="space-y-6 text-white/60 leading-relaxed text-lg font-light mb-12">
+            <div className="space-y-6 text-white/60 leading-relaxed text-lg font-light mb-12 text-balance">
               <p>
                 Leadership sets the direction. Progress comes from execution.
               </p>
@@ -310,11 +424,11 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* SECTION 6: HOW IT WORKS */}
-      <section className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto bg-white/5 rounded-[3rem] p-12 md:p-24">
+      {/* SECTION 7: METHOD (How it works) */}
+      <section className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto bg-white/5 rounded-[4rem] p-12 md:p-24 border border-white/5">
         <div className="text-center mb-24">
           <SectionLabel>Method</SectionLabel>
-          <h2 className="text-xl md:text-3xl font-light">A practical way to move forward</h2>
+          <h2 className="text-2xl md:text-4xl font-light text-white">A practical way to move forward</h2>
         </div>
         
         <div className="grid md:grid-cols-4 gap-12">
@@ -350,97 +464,46 @@ export const Home = () => {
             >
               <div className="text-5xl font-bold text-white/5 mb-6 group-hover:text-brand-teal/20 transition-colors duration-500">{item.step}</div>
               <h3 className="text-xl font-light mb-4 group-hover:text-brand-teal transition-colors text-white">{item.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
+              <p className="text-white/50 text-sm leading-relaxed font-light">{item.desc}</p>
             </motion.div>
           ))}
         </div>
 
         <div className="mt-24 text-center">
-            <p className="text-white/60 text-lg font-light italic">
+            <p className="text-white/40 text-lg font-light italic">
               You do not need to figure everything out upfront. You just need the right place to begin.
             </p>
         </div>
       </section>
 
-      {/* SECTION 7: EXAMPLES / WHAT WE’VE DONE */}
-      <section id="case-studies" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto">
-        <div className="mb-20">
-          <SectionLabel>Evidence</SectionLabel>
-          <h2 className="text-xl md:text-3xl font-light mb-4 text-white">What this looks like in practice</h2>
-          <p className="text-white/60 text-base font-light mb-12">
-            How Orvelo brings leadership and execution together for real-world impact.
-          </p>
-          
-          <Link 
-            to="/case-studies"
-            className="group flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
-          >
-            Explore all 21 case studies
-            <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Link>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {[
-            {
-              title: "Improving lead generation for a manufacturing company",
-              slug: "ai-product-chatbot-conversions",
-              insight: "The business was generating website traffic, but too many opportunities were being lost because visitors were not being engaged at the right time.",
-              outcome: "A smarter first point of interaction and stronger support for the sales process."
-            },
-            {
-              title: "Streamlining production scheduling for a manufacturing company",
-              slug: "after-sales-parts-ai-inspection",
-              insight: "The production team was relying on inefficient scheduling methods that made planning harder and slowed decision-making.",
-              outcome: "Better visibility, smoother scheduling, and a more practical system for planning."
-            }
-          ].map((example, i) => (
-            <Link 
-              key={i}
-              to={`/case-studies/${example.slug}`}
-              className="glass p-10 rounded-[2.5rem] group hover:border-brand-teal/40 transition-all duration-500"
-            >
-              <h3 className="text-2xl font-light mb-8 group-hover:text-brand-teal transition-colors">{example.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-8">{example.insight}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-white/70 italic text-sm">"{example.outcome}"</span>
-                <ArrowRight className="w-4 h-4 text-brand-teal group-hover:translate-x-2 transition-transform" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
       {/* SECTION 8: FINAL CTA */}
-      <section className="relative py-48 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto">
+      <section className="relative py-56 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="relative"
         >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.05)_0%,transparent_70%)] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(46,202,183,0.08)_0%,transparent_70%)] pointer-events-none" />
 
-          <h2 className="text-2xl md:text-4xl font-light mb-8 text-balance leading-tight">
+          <h2 className="text-3xl md:text-5xl font-light mb-10 text-balance leading-tight text-white">
             Need help finding the <br/> <span className="text-brand-teal">right place to start?</span>
           </h2>
-          <p className="text-white/60 text-lg md:text-xl font-light max-w-2xl mx-auto mb-16 leading-relaxed">
+          <p className="text-white/50 text-xl max-w-2xl mx-auto mb-16 leading-relaxed font-light">
             Whether the challenge is AI, operations, systems, or growth, Orvelo helps you bring in the right leadership and build momentum from there.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center relative z-10">
             <button 
               onClick={openModal}
-              className="px-10 py-5 bg-brand-blue text-white font-bold rounded-full hover:brightness-110 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-[0_0_30px_rgba(59,130,246,0.2)]"
+              className="w-full sm:w-auto px-10 py-5 bg-brand-blue text-white font-bold rounded-full hover:brightness-110 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(59,130,246,0.3)]"
             >
               <Calendar className="w-5 h-5" />
               Book a Strategy Call
             </button>
             <button 
               onClick={openModal}
-              className="px-10 py-5 bg-white/5 border border-white/10 font-bold rounded-full hover:bg-white/10 transition-all flex items-center gap-3 text-white"
+              className="w-full sm:w-auto px-10 py-5 bg-white/5 border border-white/10 font-bold rounded-full hover:bg-white/10 transition-all flex items-center justify-center gap-3 text-white"
             >
               <MessageSquare className="w-5 h-5" />
               Start a Conversation
@@ -451,4 +514,3 @@ export const Home = () => {
     </>
   );
 };
-

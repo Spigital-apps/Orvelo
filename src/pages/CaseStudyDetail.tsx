@@ -47,7 +47,7 @@ export const CaseStudyDetail = () => {
         style={{ scaleX }}
       />
 
-      <div className="pt-32 pb-48 px-6 md:px-24 max-w-5xl mx-auto min-h-screen">
+      <div className="pt-32 pb-48 px-6 md:px-24 max-w-7xl mx-auto min-h-screen">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -56,7 +56,7 @@ export const CaseStudyDetail = () => {
         >
           <Link 
             to="/case-studies" 
-            className="group flex items-center gap-2 text-white/40 hover:text-white transition-colors text-[10px] uppercase font-bold tracking-widest"
+            className="group inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors text-[10px] uppercase font-bold tracking-widest"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to Case Studies
@@ -68,58 +68,70 @@ export const CaseStudyDetail = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <div className="mb-20">
+          <div className="mb-24 max-w-4xl">
             <div className="flex items-center gap-3 mb-8">
-              <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-teal">
+              <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-teal px-4 py-1.5 border border-brand-teal/20 rounded-full">
                 {study.category}
               </span>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-10 leading-[1.1] tracking-tight text-balance">
+            <h1 className="text-4xl md:text-6xl font-light text-white mb-10 leading-[1.1] tracking-tight">
               {study.title}
             </h1>
           </div>
 
-          <div className="grid gap-24">
+          <div className="grid gap-16 md:gap-32">
             {/* Split View Content */}
-            <div className="grid md:grid-cols-3 gap-16">
-              <div className="md:col-span-1">
-                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-8 border-b border-white/5 pb-4">
-                  Client Context
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+              <div className="lg:col-span-4 sticky top-32">
+                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-6 border-l-2 border-brand-teal pl-4">
+                  The Problem
                 </h2>
+                <div className="text-white/40 text-sm font-light leading-relaxed">
+                  Understanding the starting point and the friction that was holding the business back.
+                </div>
               </div>
-              <div className="md:col-span-2">
-                <p className="text-xl md:text-2xl font-light text-white/60 leading-relaxed">
+              <div className="lg:col-span-8">
+                <p className="text-lg md:text-xl font-light text-white/70 leading-relaxed max-w-3xl">
                   {study.clientContext}
                 </p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-16">
-              <div className="md:col-span-1">
-                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-8 border-b border-white/5 pb-4">
-                  Audit & Solution
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+              <div className="lg:col-span-4 sticky top-32">
+                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-6 border-l-2 border-brand-teal pl-4">
+                  The Audit
                 </h2>
+                <div className="text-white/40 text-sm font-light leading-relaxed">
+                  How Orvelo’s leadership team identified the root causes and determined the right direction.
+                </div>
               </div>
-              <div className="md:col-span-2">
-                <p className="text-xl md:text-2xl font-light text-white/60 leading-relaxed italic">
-                  {study.auditSolution}
-                </p>
+              <div className="lg:col-span-8">
+                <div className="glass p-10 md:p-12 rounded-[2.5rem] border border-white/5 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-brand-teal/5 blur-[80px] rounded-full -translate-y-32 translate-x-32 group-hover:bg-brand-teal/10 transition-all duration-1000" />
+                  <p className="text-lg md:text-xl font-light text-white/80 leading-relaxed italic relative z-10">
+                    {study.auditSolution}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-16">
-              <div className="md:col-span-1">
-                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-8 border-b border-white/5 pb-4">
-                  Execution
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+              <div className="lg:col-span-4 sticky top-32">
+                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-6 border-l-2 border-brand-teal pl-4 text-balance">
+                  The Execution
                 </h2>
+                <div className="text-white/40 text-sm font-light leading-relaxed">
+                  The practical steps taken to build systems, tools, and processes for scale.
+                </div>
               </div>
-              <div className="md:col-span-2 bg-white/[0.02] p-10 md:p-16 rounded-[3rem] border border-white/5">
-                <p className="text-xl md:text-2xl font-light text-white/70 leading-relaxed mb-10">
+              <div className="lg:col-span-8 bg-white/[0.01] border border-white/5 p-10 md:p-16 rounded-[3rem]">
+                <p className="text-lg md:text-xl font-light text-white/60 leading-relaxed mb-12">
                   {study.execution}
                 </p>
-                <div className="flex flex-wrap gap-4">
-                  {["System Architecture", "AI Integration", "Process Governance", "Strategic Planning"].map((tag) => (
-                    <span key={tag} className="text-[9px] uppercase tracking-widest font-bold text-brand-teal/50 px-4 py-2 border border-brand-teal/20 rounded-full">
+                <div className="flex flex-wrap gap-3">
+                  {["System Architecture", "AI Integration", "Workflow Automation", "Process Governance", "Strategic Planning"].map((tag) => (
+                    <span key={tag} className="text-[9px] uppercase tracking-widest font-bold text-white/30 px-5 py-2.5 border border-white/5 rounded-full hover:border-brand-teal/30 hover:text-brand-teal/70 transition-all cursor-default">
                       {tag}
                     </span>
                   ))}
@@ -127,20 +139,24 @@ export const CaseStudyDetail = () => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-16">
-              <div className="md:col-span-1">
-                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-8 border-b border-white/5 pb-4">
-                  Outcome
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+              <div className="lg:col-span-4">
+                <h2 className="text-[10px] uppercase tracking-[0.3em] font-bold text-brand-teal mb-6 border-l-2 border-brand-teal pl-4">
+                  The Outcome
                 </h2>
               </div>
-              <div className="md:col-span-2">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 rounded-full border border-brand-teal/40 flex items-center justify-center shrink-0 mt-2">
-                    <CheckCircle2 className="w-6 h-6 text-brand-teal" />
+              <div className="lg:col-span-8">
+                <div className="border-t border-brand-teal/20 pt-12">
+                  <div className="flex items-start gap-8">
+                    <div className="w-14 h-14 rounded-2xl bg-brand-teal/5 border border-brand-teal/20 flex items-center justify-center shrink-0 mt-1">
+                      <CheckCircle2 className="w-7 h-7 text-brand-teal" />
+                    </div>
+                    <div className="space-y-4">
+                      <p className="text-2xl md:text-4xl font-light text-white leading-tight">
+                        {study.outcome}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-3xl md:text-5xl font-light text-white leading-tight">
-                    {study.outcome}
-                  </p>
                 </div>
               </div>
             </div>

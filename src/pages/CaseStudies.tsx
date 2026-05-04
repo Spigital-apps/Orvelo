@@ -1,8 +1,11 @@
 import { motion } from 'motion/react';
 import { CaseStudyTabs } from '../components/CaseStudyTabs';
 import { SEO } from '../components/SEO';
+import { useState } from 'react';
 
 export const CaseStudiesPage = () => {
+  const [activeCategory, setActiveCategory] = useState('All');
+
   return (
     <div className="pt-32 pb-48 px-6 md:px-24 max-w-7xl mx-auto min-h-screen">
       <SEO 
@@ -29,7 +32,7 @@ export const CaseStudiesPage = () => {
           </p>
         </div>
 
-        <CaseStudyTabs />
+        <CaseStudyTabs activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       </motion.div>
     </div>
   );

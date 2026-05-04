@@ -3,23 +3,55 @@ import { useEffect } from 'react';
 interface SEOProps {
   title: string;
   description?: string;
+  image?: string;
+  url?: string;
 }
 
-export const SEO = ({ title, description }: SEOProps) => {
+export const SEO = ({ title, description, image, url }: SEOProps) => {
   useEffect(() => {
     document.title = title;
-    if (description) {
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', description);
-      } else {
-        const meta = document.createElement('meta');
-        meta.name = 'description';
-        meta.content = description;
-        document.head.appendChild(meta);
+    
+    const updateMeta = (name: string, content: string, isProperty = false) => {
+      const selector = isProperty ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+      let element = document.querySelector(selector);
+      if (!element) {
+        element = document.createElement('meta');
+        if (isProperty) {
+          element.setAttribute('property', name);
+        } else {
+          element.setAttribute('name', name);
+        }
+        document.head.appendChild(element);
       }
+      element.setAttribute('content', content);
+    };
+
+    if (description) {
+      updateMeta('description', description);
+      updateMeta('og:description', description, true);
+      updateMeta('twitter:description', description);
     }
-  }, [title, description]);
+
+    updateMeta('og:title', title, true);
+    updateMeta('twitter:title', title);
+    updateMeta('og:type', 'website', true);
+
+    if (image) {
+      updateMeta('og:image', image, true);
+      updateMeta('twitter:image', image);
+    } else {
+      // Default OG image if none provided
+      updateMeta('og:image', '/Orvelo.png', true);
+    }
+
+    if (url) {
+      updateMeta('og:url', url, true);
+    } else {
+      updateMeta('og:url', window.location.href, true);
+    }
+
+    updateMeta('twitter:card', 'summary_large_image');
+  }, [title, description, image, url]);
 
   return null;
 };
