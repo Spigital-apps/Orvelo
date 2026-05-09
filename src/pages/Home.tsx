@@ -44,7 +44,7 @@ export const Home = () => {
       />
       
       {/* SECTION 1: OPENING SECTION (Hero) */}
-      <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-24 py-32 z-10 max-w-7xl mx-auto overflow-hidden">
+      <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-24 py-24 z-10 max-w-7xl mx-auto overflow-hidden">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -57,8 +57,8 @@ export const Home = () => {
                 <span className="text-4xl md:text-5xl lg:text-6xl font-light text-white text-balance">
                   There is an <span className="italic">AI</span> for everything.
                 </span>
-                <span className="text-base md:text-xl font-light text-white/40 text-balance leading-relaxed">
-                  But how do you make it <span className="text-[#2ecab7]">work for your business?</span>
+                <span className="text-base md:text-xl font-light text-[#2ecab7] text-balance leading-relaxed">
+                  But how do you make it work for your business?
                 </span>
               </h1>
             </div>
@@ -104,7 +104,7 @@ export const Home = () => {
       </section>
 
       {/* SECTION 2: WHO WE ARE (Genesis) */}
-      <section id="who" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
+      <section id="who" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
         <div className="grid md:grid-cols-2 gap-24 items-start">
           <motion.div
              initial={{ opacity: 0, x: -30 }}
@@ -164,8 +164,82 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* SECTION 3: START SMALL (Strategy) */}
-      <section className="relative py-48 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto border-t border-white/5">
+      {/* SECTION 3: EVIDENCE (Case Studies) */}
+      <section id="case-studies" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
+        <div className="mb-20">
+          <SectionLabel>Evidence</SectionLabel>
+          <h2 className="text-2xl md:text-4xl font-light mb-4 text-white">What this looks like in practice</h2>
+          <p className="text-white/60 text-base font-light mb-12">
+            How Orvelo brings leadership and execution together for real-world impact.
+          </p>
+
+          <div className="flex items-center justify-between mb-12">
+            <CaseStudyTabs activeCategory={activeCategory} setActiveCategory={setActiveCategory} showContent={false} />
+            
+            <div className="hidden md:flex gap-3">
+              <button 
+                onClick={() => scrollRef.current?.scrollBy({ left: -432, behavior: 'smooth' })}
+                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                <ArrowRight className="w-5 h-5 rotate-180" />
+              </button>
+              <button 
+                onClick={() => scrollRef.current?.scrollBy({ left: 432, behavior: 'smooth' })}
+                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <div 
+            ref={scrollRef}
+            className="flex gap-8 overflow-x-auto pb-12 snap-x no-scrollbar"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {filteredStudies.map((study, i) => (
+              <motion.div
+                key={study.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                viewport={{ once: true }}
+                className="min-w-[320px] md:min-w-[400px] snap-start"
+              >
+                <Link 
+                  to={`/case-studies/${study.slug}`}
+                  className="glass p-10 rounded-[2.5rem] group hover:border-brand-teal/40 transition-all duration-500 h-[380px] flex flex-col"
+                >
+                  <div className="text-[10px] uppercase tracking-widest text-brand-teal font-bold mb-4">{study.category}</div>
+                  <h3 className="text-xl md:text-2xl font-light mb-6 group-hover:text-brand-teal transition-colors flex-grow leading-tight">{study.title}</h3>
+                  <p className="text-white/50 text-sm leading-relaxed mb-8 line-clamp-3 font-light">{study.outcome}</p>
+                  <div className="flex items-center justify-between mt-auto">
+                    <span className="text-white/30 text-[9px] uppercase tracking-widest font-bold group-hover:text-brand-teal transition-colors">Read Case Study</span>
+                    <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal group-hover:text-brand-navy transition-all">
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link 
+              to="/case-studies"
+              className="group inline-flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
+            >
+              Explore all {CASE_STUDIES.length} case studies
+              <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: START SMALL (Strategy) */}
+      <section className="relative py-32 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto border-t border-white/5">
         <motion.div
            initial={{ opacity: 0, scale: 0.98 }}
            whileInView={{ opacity: 1, scale: 1 }}
@@ -192,99 +266,8 @@ export const Home = () => {
         </motion.div>
       </section>
 
-      {/* SECTION 4: EVIDENCE (Case Studies) */}
-      <section id="case-studies" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
-        <div className="mb-20">
-          <SectionLabel>Evidence</SectionLabel>
-          <h2 className="text-2xl md:text-4xl font-light mb-4 text-white">What this looks like in practice</h2>
-          <p className="text-white/60 text-base font-light mb-12">
-            How Orvelo brings leadership and execution together for real-world impact.
-          </p>
-
-          <CaseStudyTabs activeCategory={activeCategory} setActiveCategory={setActiveCategory} showContent={false} />
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {featuredStudies.map((study, i) => (
-            <motion.div
-              key={study.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <Link 
-                to={`/case-studies/${study.slug}`}
-                className="glass p-8 rounded-[2.5rem] group hover:border-brand-teal/40 transition-all duration-500 h-full flex flex-col"
-              >
-                <div className="text-[10px] uppercase tracking-widest text-brand-teal font-bold mb-4">{study.category}</div>
-                <h3 className="text-xl font-light mb-6 group-hover:text-brand-teal transition-colors flex-grow leading-tight">{study.title}</h3>
-                <p className="text-white/50 text-xs leading-relaxed mb-8 line-clamp-3 font-light">{study.outcome}</p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="text-white/30 text-[9px] uppercase tracking-widest font-bold group-hover:text-brand-teal transition-colors">Read Case Study</span>
-                  <ArrowRight className="w-4 h-4 text-brand-teal group-hover:translate-x-2 transition-transform" />
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-
-        {carouselStudies.length > 0 && (
-          <div className="relative mb-24">
-            <div className="flex items-center justify-between mb-8">
-              <h4 className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-bold">More {activeCategory === 'All' ? '' : activeCategory} Impact</h4>
-              <div className="flex gap-3">
-                <button 
-                  onClick={() => scrollRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}
-                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
-                >
-                  <ArrowRight className="w-5 h-5 rotate-180" />
-                </button>
-                <button 
-                  onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}
-                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-            <div 
-              ref={scrollRef}
-              className="flex gap-6 overflow-x-auto pb-8 snap-x no-scrollbar"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {carouselStudies.map((study) => (
-                <Link 
-                  key={study.id}
-                  to={`/case-studies/${study.slug}`}
-                  className="min-w-[320px] md:min-w-[420px] snap-start glass p-10 rounded-[2.5rem] group hover:border-brand-teal/40 transition-all duration-500"
-                >
-                  <div className="text-[9px] uppercase tracking-widest text-brand-teal font-bold mb-4">{study.category}</div>
-                  <h3 className="text-lg md:text-xl font-light mb-6 group-hover:text-brand-teal transition-colors line-clamp-2 leading-tight">{study.title}</h3>
-                  <div className="flex items-center gap-2 text-white/30 text-[9px] uppercase tracking-widest font-bold group-hover:text-white/60 transition-colors">
-                    Learn More <ArrowRight className="w-3 h-3" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="mt-12 text-center">
-          <Link 
-            to="/case-studies"
-            className="group inline-flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
-          >
-            Explore all {CASE_STUDIES.length} case studies
-            <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Link>
-        </div>
-      </section>
-
       {/* SECTION 5: ADVISORY (Leadership) */}
-      <section id="leadership" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
+      <section id="leadership" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -312,11 +295,11 @@ export const Home = () => {
             },
             {
               role: "Your extended CAIO",
-              name: "Karthikeyan",
+              name: "Kharthickeyen KS",
               credentials: "AI Strategist & Coach",
               bio: "Helping businesses and founders adopt AI effectively and build the right AI foundations for their organization.",
               imagePath: "https://marketing.indiatx.com/wp-content/uploads/2026/05/Karthikeyan.png",
-              seed: "karthikeyan"
+              seed: "kharthickeyen-ks"
             },
             {
               role: "Your extended CTO",
@@ -375,7 +358,7 @@ export const Home = () => {
 
 
       {/* SECTION 6: MOMENTUM (Execution) */}
-      <section id="momentum" className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
+      <section id="momentum" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
         <div className="grid lg:grid-cols-2 gap-24 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -425,7 +408,7 @@ export const Home = () => {
       </section>
 
       {/* SECTION 7: METHOD (How it works) */}
-      <section className="relative py-48 px-6 md:px-24 z-10 max-w-7xl mx-auto bg-white/5 rounded-[4rem] p-12 md:p-24 border border-white/5">
+      <section className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto bg-white/5 rounded-[4rem] p-12 md:p-24 border border-white/5">
         <div className="text-center mb-24">
           <SectionLabel>Method</SectionLabel>
           <h2 className="text-2xl md:text-4xl font-light text-white">A practical way to move forward</h2>
@@ -477,7 +460,7 @@ export const Home = () => {
       </section>
 
       {/* SECTION 8: FINAL CTA */}
-      <section className="relative py-56 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto">
+      <section className="relative py-40 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

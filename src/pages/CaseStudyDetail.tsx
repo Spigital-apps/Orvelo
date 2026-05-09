@@ -47,7 +47,7 @@ export const CaseStudyDetail = () => {
         style={{ scaleX }}
       />
 
-      <div className="pt-32 pb-48 px-6 md:px-24 max-w-7xl mx-auto min-h-screen">
+      <div className="pt-32 pb-32 px-6 md:px-24 max-w-7xl mx-auto min-h-screen">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -163,7 +163,7 @@ export const CaseStudyDetail = () => {
           </div>
 
           {/* CTA / Navigation */}
-          <div className="mt-48 pt-24 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="mt-32 pt-24 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-12">
             <Link 
               to="/case-studies" 
               className="text-white/40 hover:text-brand-teal transition-colors flex items-center gap-3 font-bold uppercase tracking-widest text-xs"

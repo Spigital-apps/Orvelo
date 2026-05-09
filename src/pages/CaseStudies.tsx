@@ -7,7 +7,7 @@ export const CaseStudiesPage = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 
   return (
-    <div className="pt-32 pb-48 px-6 md:px-24 max-w-7xl mx-auto min-h-screen">
+    <div className="pt-32 pb-32 px-6 md:px-24 max-w-7xl mx-auto min-h-screen">
       <SEO 
         title="Case Studies | Orvelo Strategy and Execution" 
         description="Explore how Orvelo has helped businesses across manufacturing, aviation, fuel retail, and more build scalable digital solutions."
