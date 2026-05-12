@@ -41,12 +41,13 @@ export const SEO = ({ title, description, image, url }: SEOProps) => {
       updateMeta('twitter:image', image);
     } else {
       // Default OG image if none provided
-      updateMeta('og:image', '/Orvelo.png', true);
+      updateMeta('og:image', 'https://www.orvelo.ai/Orvelo.png', true);
+      updateMeta('twitter:image', 'https://www.orvelo.ai/Orvelo.png');
     }
 
     if (url) {
       updateMeta('og:url', url, true);
-    } else {
+    } else if (typeof window !== 'undefined') {
       updateMeta('og:url', window.location.href, true);
     }
 
