@@ -44,8 +44,8 @@ export const Home = () => {
   return (
     <>
       <SEO 
-        title="Orvelo | Helping Businesses Build Secure and Scalable Ecosystems" 
-        description="Orvelo is an extended leadership team that helps companies audit workflows, standardise operations, and build AI-assisted digital ecosystems for scale."
+        title="Orvelo | AI Consulting and Execution Partner for Growing Businesses" 
+        description="Not sure where to start with AI? Orvelo helps SMBs identify the right opportunities, bring in the right fractional leader, and execute practical solutions that move the business forward."
       />
       
       {/* SECTION 1: OPENING SECTION (Hero) */}
@@ -78,13 +78,13 @@ export const Home = () => {
           </h1>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button 
-              onClick={openModal}
+            <a 
+              href="#readiness"
               className={`px-10 py-5 rounded-full font-bold transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-lg ${isDark ? 'bg-brand-blue text-white shadow-brand-blue/20' : 'bg-brand-navy text-white shadow-brand-navy/20'}`}
             >
               Start with Orvelo
               <ArrowRight className="w-5 h-5" />
-            </button>
+            </a>
             <Link 
               to="/case-studies"
               className={`px-10 py-5 rounded-full font-bold border transition-all flex items-center gap-3 ${isDark ? 'border-white/10 text-white hover:bg-white/5' : 'border-brand-navy/10 text-brand-navy hover:bg-brand-navy/5'}`}
@@ -230,29 +230,38 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* SECTION 4: START SMALL (Strategy) */}
-      <section className="relative py-32 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto border-t border-white/5">
+      {/* SECTION 4: STRATEGY (Readiness Audit) */}
+      <section id="readiness" className="relative py-32 px-6 md:px-24 z-10 text-center max-w-5xl mx-auto border-t border-white/5">
         <motion.div
            initial={{ opacity: 0, scale: 0.98 }}
            whileInView={{ opacity: 1, scale: 1 }}
            transition={{ duration: 1.2 }}
            viewport={{ once: true }}
         >
-          <SectionLabel>Strategy</SectionLabel>
-          <h2 className="text-2xl md:text-4xl font-light mb-16 text-balance leading-[1.1]">
-            You do not need a massive transformation to begin.
+          <SectionLabel>Readiness Audit</SectionLabel>
+          <h2 className="text-2xl md:text-5xl font-light mb-16 text-balance leading-[1.1] text-white">
+            Start with the problem that matters most.
           </h2>
-          <div className="space-y-10 text-white/40 text-xl md:text-2xl font-light max-w-3xl mx-auto leading-relaxed">
+          <div className="space-y-10 text-white/40 text-xl md:text-2xl font-light max-w-4xl mx-auto leading-relaxed">
             <p>
-              Most businesses do not need to overhaul everything at once. They need to identify one meaningful place to start, make progress there, and build from that momentum.
+              Whether you are trying to improve sales and marketing, unlock revenue growth, increase operational efficiency, or deliver a better customer experience, the first step is understanding where AI can make a real difference.
             </p>
-            <p>
-              That is how we work. We help businesses focus on what matters first, validate value early, and grow with more confidence over time.
+            <p className="text-brand-teal font-medium">
+              The Orvelo Readiness Audit helps you do exactly that.
+            </p>
+            <p className="text-lg md:text-xl">
+              Our extended leadership team studies your current processes, identifies the bottlenecks and opportunities, and maps where AI can create real business value. They then develop a practical roadmap and build a focused mockup or proof of concept, so you can test the approach before scaling further.
             </p>
             <div className="pt-12">
-               <span className="text-white font-bold uppercase tracking-[0.4em] text-[10px] border-[#2ecab7]/40 border-b pb-2">
-                 Start with the right move. Build from what works.
-               </span>
+              <button 
+                onClick={openModal}
+                className="group inline-flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
+              >
+                Schedule your Readiness Audit
+                <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
             </div>
           </div>
         </motion.div>
@@ -267,12 +276,17 @@ export const Home = () => {
           className="mb-24"
         >
           <SectionLabel>Advisory</SectionLabel>
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-light mb-8 max-w-4xl text-balance leading-tight">
-            Bring in the right fractional leader for the challenge in front of you
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-light mb-8 max-w-4xl text-balance leading-tight text-white italic">
+            Guidance before automation
           </h2>
-          <p className="text-white/40 text-xl max-w-2xl font-light leading-relaxed">
-            Not every business problem needs the same kind of leadership. Orvelo brings in the right fractional expert based on what your business actually needs.
-          </p>
+          <div className="space-y-6 text-white/40 text-xl max-w-3xl font-light leading-relaxed">
+            <p>
+              While everyone is chasing AI tools and automations, your business needs the right leader to understand the problem, guide the decision, and stay involved through execution.
+            </p>
+            <p>
+              Orvelo gives you access to extended leadership that can step in, guide the work, help execute the solution, and leave behind systems that continue to deliver results.
+            </p>
+          </div>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -358,19 +372,19 @@ export const Home = () => {
             viewport={{ once: true }}
           >
             <SectionLabel>Execution</SectionLabel>
-            <h2 className="text-xl md:text-3xl font-light mb-8">
-              Then we help you build momentum through execution
+            <h2 className="text-xl md:text-3xl font-light mb-8 text-white italic">
+              Execution that is built to deliver results
             </h2>
             <div className="space-y-6 text-white/60 leading-relaxed text-lg font-light mb-12 text-balance">
               <p>
-                Leadership sets the direction. Progress comes from execution.
+                It has become easy to build automations and AI workflows. But without the right thinking behind them, they rarely deliver meaningful results.
               </p>
               <p>
-                Once the path is clear, Orvelo helps businesses move forward with practical support that turns ideas into working outcomes.
+                That is why Orvelo does more than consult. We stay involved through execution, helping you build the right systems, automate the right processes, and create results that actually matter.
               </p>
             </div>
             <p className="text-lg text-white font-light italic border-l-2 border-brand-teal pl-6 py-2">
-              The goal is not more activity. It is useful progress that the business can build on.
+              Leadership sets the direction. Progress comes from execution.
             </p>
           </motion.div>
 
