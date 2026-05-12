@@ -11,10 +11,12 @@ import {
   TrendingUp, 
   CheckCircle2,
   Calendar,
-  MessageSquare
+  MessageSquare,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { SectionLabel } from '../components/SectionLabel';
-import { ConceptualAnimation } from '../components/ConceptualAnimation';
+import { ParticleAnimation } from '../components/ParticleAnimation';
 import { SEO } from '../components/SEO';
 
 import { Link } from 'react-router-dom';
@@ -27,6 +29,7 @@ import { useState, useRef } from 'react';
 export const Home = () => {
   const { openModal } = useModal();
   const [activeCategory, setActiveCategory] = useState('All');
+  const [heroTheme, setHeroTheme] = useState<'dark' | 'light'>('dark');
   
   const filteredStudies = activeCategory === 'All' 
     ? CASE_STUDIES 
@@ -36,6 +39,8 @@ export const Home = () => {
   const carouselStudies = filteredStudies.slice(3);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const isDark = heroTheme === 'dark';
+
   return (
     <>
       <SEO 
@@ -44,63 +49,50 @@ export const Home = () => {
       />
       
       {/* SECTION 1: OPENING SECTION (Hero) */}
-      <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-24 py-24 z-10 max-w-7xl mx-auto overflow-hidden">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            viewport={{ once: true }}
+      <section className={`relative min-h-screen flex flex-col justify-center items-center px-6 md:px-24 py-24 z-10 overflow-hidden transition-colors duration-700 ${isDark ? 'bg-brand-navy' : 'bg-white'}`}>
+        <ParticleAnimation theme={heroTheme} />
+        
+        {/* Theme Toggle */}
+        <div className="absolute top-32 right-6 md:right-24 z-20">
+          <button 
+            onClick={() => setHeroTheme(prev => prev === 'dark' ? 'light' : 'dark')}
+            className={`p-3 rounded-full border transition-all ${isDark ? 'border-white/10 text-white hover:bg-white/5' : 'border-brand-navy/10 text-brand-navy hover:bg-brand-navy/5'}`}
           >
-            <div className="max-w-xl">
-              <h1 className="flex flex-col gap-6 mb-12 tracking-tight leading-[1.1]">
-                <span className="text-4xl md:text-5xl lg:text-6xl font-light text-white text-balance">
-                  There is an <span className="italic">AI</span> for everything.
-                </span>
-                <span className="text-base md:text-xl font-light text-[#2ecab7] text-balance leading-relaxed">
-                  But how do you make it work for your business?
-                </span>
-              </h1>
-            </div>
-            
-            <div className="space-y-6 max-w-xl text-base md:text-xl font-light text-white/50 leading-relaxed mb-12">
-              <p>
-                Every day, business owners are told that AI can improve sales, automate work, fix operations, and save time.
-              </p>
-              <p className="text-white/70">
-                The problem is not access. The problem is knowing what to use, where to start, and <span className="text-brand-teal">how to make it work</span> in the real world.
-              </p>
-            </div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 1 }}
-              viewport={{ once: true }}
-            >
-              <button 
-                onClick={openModal}
-                className="group flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
-              >
-                Start a Conversation
-                <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </button>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: 40 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-            viewport={{ once: true }}
-            className="relative hidden lg:block"
-          >
-            <ConceptualAnimation />
-            <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-64 h-64 bg-brand-teal/5 blur-[100px] rounded-full" />
-          </motion.div>
+            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 text-center max-w-4xl"
+        >
+          <h1 className="flex flex-col gap-4 mb-20">
+            <span className={`text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-balance leading-[1.05] ${isDark ? 'text-white' : 'text-brand-navy'}`}>
+              You know AI can help.
+            </span>
+            <span className={`text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-balance leading-[1.05] ${isDark ? 'text-[#2ecab7]' : 'text-brand-blue'}`}>
+              You just don’t know where to start.
+            </span>
+          </h1>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <button 
+              onClick={openModal}
+              className={`px-10 py-5 rounded-full font-bold transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-lg ${isDark ? 'bg-brand-blue text-white shadow-brand-blue/20' : 'bg-brand-navy text-white shadow-brand-navy/20'}`}
+            >
+              Start with Orvelo
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            <Link 
+              to="/case-studies"
+              className={`px-10 py-5 rounded-full font-bold border transition-all flex items-center gap-3 ${isDark ? 'border-white/10 text-white hover:bg-white/5' : 'border-brand-navy/10 text-brand-navy hover:bg-brand-navy/5'}`}
+            >
+              Explore Case Studies
+            </Link>
+          </div>
+        </motion.div>
       </section>
 
       {/* SECTION 2: WHO WE ARE (Genesis) */}
@@ -112,19 +104,19 @@ export const Home = () => {
              transition={{ duration: 1.2 }}
              viewport={{ once: true }}
           >
-            <SectionLabel>Genesis</SectionLabel>
-            <h2 className="text-2xl md:text-4xl font-light leading-tight mb-10 text-balance">
-              That is where Orvelo comes in.
+            <SectionLabel>Clarity over noise</SectionLabel>
+            <h2 className="text-2xl md:text-3xl font-light leading-tight mb-10 text-balance text-white">
+              Your business does not need AI tools, it needs clarity on where AI can actually help, what is worth doing first, and how to make progress without wasting time, money, or energy on the wrong things.
             </h2>
             <div className="space-y-8 text-white/50 text-lg leading-relaxed font-light">
-              <p>
-                Orvelo helps growing businesses find the right direction and build momentum through practical leadership and execution.
+              <p className="text-brand-teal font-medium text-xl italic">
+                That is exactly where Orvelo comes in.
               </p>
               <p>
-                The name Orvelo comes from <strong className="text-white font-medium">orbital velocity</strong>, the point at which something has enough force to break free and move forward.
+                Orvelo gives your business the <strong className="text-white font-medium">orbital velocity</strong> it needs to break free and move forward — overcoming the gravity of slower sales, inefficient processes, disconnected systems, and manual work that slows growth.
               </p>
               <p>
-                Businesses face their own version of gravity every day: slower sales, inefficient processes, disconnected systems, and manual work.
+                We help growing businesses make sense of the noise, identify the right starting point, and move forward with the right mix of leadership and execution.
               </p>
             </div>
           </motion.div>
@@ -133,13 +125,13 @@ export const Home = () => {
             {[
               { 
                 icon: Compass, 
-                title: "Direction", 
-                desc: "The right leadership to understand the problem, identify the opportunity, and guide the next move." 
+                title: "Human Intelligence", 
+                desc: "Extended leadership that works with you to understand the real problem, identify the real opportunity, and decide the best way forward." 
               },
               { 
-                icon: Zap, 
-                title: "Momentum", 
-                desc: "The execution support, systems, tools, and AI enablement needed to turn the right decision into real progress." 
+                icon: Workflow, 
+                title: "AI Execution", 
+                desc: "AI agents and execution support that build the tools, systems, automations, and workflows needed to turn those decisions into practical business results." 
               }
             ].map((item, i) => (
               <motion.div 
@@ -165,27 +157,27 @@ export const Home = () => {
       </section>
 
       {/* SECTION 3: EVIDENCE (Case Studies) */}
-      <section id="case-studies" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5">
+      <section id="case-studies" className="relative py-32 px-6 md:px-24 z-10 max-w-7xl mx-auto border-t border-white/5 bg-white text-brand-navy rounded-[3rem] my-12">
         <div className="mb-20">
-          <SectionLabel>Evidence</SectionLabel>
-          <h2 className="text-2xl md:text-4xl font-light mb-4 text-white">What this looks like in practice</h2>
-          <p className="text-white/60 text-base font-light mb-12">
+          <SectionLabel className="text-brand-blue border-brand-blue/20">Evidence</SectionLabel>
+          <h2 className="text-2xl md:text-4xl font-semibold mb-4 text-brand-navy">What this looks like in practice</h2>
+          <p className="text-brand-navy/60 text-base font-light mb-12">
             How Orvelo brings leadership and execution together for real-world impact.
           </p>
 
           <div className="flex items-center justify-between mb-12">
-            <CaseStudyTabs activeCategory={activeCategory} setActiveCategory={setActiveCategory} showContent={false} />
+            <CaseStudyTabs activeCategory={activeCategory} setActiveCategory={setActiveCategory} showContent={false} theme="light" />
             
             <div className="hidden md:flex gap-3">
               <button 
                 onClick={() => scrollRef.current?.scrollBy({ left: -432, behavior: 'smooth' })}
-                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+                className="w-12 h-12 rounded-full border border-brand-navy/10 flex items-center justify-center hover:bg-brand-navy/5 transition-colors text-brand-navy"
               >
                 <ArrowRight className="w-5 h-5 rotate-180" />
               </button>
               <button 
                 onClick={() => scrollRef.current?.scrollBy({ left: 432, behavior: 'smooth' })}
-                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+                className="w-12 h-12 rounded-full border border-brand-navy/10 flex items-center justify-center hover:bg-brand-navy/5 transition-colors text-brand-navy"
               >
                 <ArrowRight className="w-5 h-5" />
               </button>
@@ -208,10 +200,10 @@ export const Home = () => {
               >
                 <Link 
                   to={`/case-studies/${study.slug}`}
-                  className="glass p-10 rounded-[2.5rem] group hover:border-brand-teal/40 transition-all duration-500 h-[380px] flex flex-col"
+                  className="bg-black p-10 rounded-[2.5rem] group hover:border-brand-teal/40 border border-white/5 transition-all duration-500 h-[380px] flex flex-col"
                 >
                   <div className="text-[10px] uppercase tracking-widest text-brand-teal font-bold mb-4">{study.category}</div>
-                  <h3 className="text-xl md:text-2xl font-light mb-6 group-hover:text-brand-teal transition-colors flex-grow leading-tight">{study.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-light mb-6 group-hover:text-brand-teal transition-colors flex-grow leading-tight text-white">{study.title}</h3>
                   <p className="text-white/50 text-sm leading-relaxed mb-8 line-clamp-3 font-light">{study.outcome}</p>
                   <div className="flex items-center justify-between mt-auto">
                     <span className="text-white/30 text-[9px] uppercase tracking-widest font-bold group-hover:text-brand-teal transition-colors">Read Case Study</span>
@@ -227,10 +219,10 @@ export const Home = () => {
           <div className="mt-12 text-center">
             <Link 
               to="/case-studies"
-              className="group inline-flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-teal hover:text-white transition-all"
+              className="group inline-flex items-center gap-4 text-[10px] font-bold tracking-[0.2em] uppercase text-brand-blue hover:text-brand-navy transition-all"
             >
               Explore all {CASE_STUDIES.length} case studies
-              <div className="w-10 h-10 rounded-full border border-brand-teal/20 flex items-center justify-center group-hover:bg-brand-teal/10 group-hover:border-brand-teal/40 transition-all">
+              <div className="w-10 h-10 rounded-full border border-brand-blue/20 flex items-center justify-center group-hover:bg-brand-blue/10 group-hover:border-brand-blue/40 transition-all">
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>

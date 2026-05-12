@@ -9,15 +9,17 @@ interface CaseStudyTabsProps {
   activeCategory: string;
   setActiveCategory: (category: any) => void;
   showContent?: boolean;
+  theme?: 'dark' | 'light';
 }
 
-export const CaseStudyTabs = ({ activeCategory, setActiveCategory, showContent = true }: CaseStudyTabsProps) => {
+export const CaseStudyTabs = ({ activeCategory, setActiveCategory, showContent = true, theme = 'dark' }: CaseStudyTabsProps) => {
   const filteredStudies = CASE_STUDIES.filter(study => study.category === activeCategory || activeCategory === 'All');
+  const isDark = theme === 'dark';
 
   return (
     <div className="w-full">
       {/* Tabs Header */}
-      <div className="flex flex-wrap gap-2 mb-12 border-b border-white/5 pb-6">
+      <div className={`flex flex-wrap gap-2 mb-12 border-b pb-6 ${isDark ? 'border-white/5' : 'border-brand-navy/5'}`}>
         {['All', ...CATEGORIES].map((category) => (
           <button
             key={category}
@@ -25,7 +27,9 @@ export const CaseStudyTabs = ({ activeCategory, setActiveCategory, showContent =
             className={`px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 relative ${
               activeCategory === category 
                 ? 'text-brand-teal bg-brand-teal/5' 
-                : 'text-white/40 hover:text-white/70 hover:bg-white/[0.02]'
+                : isDark 
+                  ? 'text-white/40 hover:text-white/70 hover:bg-white/[0.02]'
+                  : 'text-brand-navy/40 hover:text-brand-navy/70 hover:bg-brand-navy/[0.02]'
             }`}
           >
             {category}
